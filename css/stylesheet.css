@@ -1,0 +1,7 @@
+#backgroundVigne {
+    background-image: url("../images/vignes.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 200px;
+    background-position: 0% 40%;
+}

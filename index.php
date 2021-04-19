@@ -4,7 +4,7 @@ if (isset($_POST["submit"])) {
 
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
     if ($check !== false) {
-        $file_tmp= $_FILES['fileToUpload']['tmp_name'];
+        $file_tmp = $_FILES['fileToUpload']['tmp_name'];
         $data = file_get_contents($file_tmp);
         $base64 = base64_encode($data);
 
@@ -33,25 +33,72 @@ if (isset($_POST["submit"])) {
         curl_close($ch);
         $result = json_decode($result, true);
         $new_str = str_replace(' ', '', $result);
-        $value = json_decode($new_str,true);
+        $value = json_decode($new_str, true);
         $response = $value['result'];
     }
 }
 ?>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="PersoChampagne, personnalisez votre champagne.">
+    <meta name="keywords" content="Créez votre étui et immortalisez vos évènements.">
+    <meta name="author" content="Matthieu Paris">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 <body>
 <div class="main">
-    <form action="index.php" method="post" enctype="multipart/form-data">
-        Select image to upload:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
-    <div class="result">
-        <?php if (isset($response)) echo "It's a ".$response;?>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar-scroll">
+        <a class="navbar-brand">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav navbar-nav ml-auto">
+                <!--                <li class="nav-item active">-->
+                <!--                    <a class="nav-link" href="{{ path('artist_products') }}">Soutenez nos artistes</a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="#">Mon espace</a>-->
+                <!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="#">Contact</a>-->
+                <!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+    <div class="row" id="rowBackgroundVigne">
+        <div class="col-md-12" id="backgroundVigne">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align: center">Image Classification</h1>
+            <h6 style="text-align: center;">["airplane","automobile","bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]</h6>
+            <form style="text-align: center;margin-top: 30px;" action="index.php" method="post"
+                  enctype="multipart/form-data">
+                Select image to upload:
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit">
+            </form>
+            <div class="result" style="text-align: center;">
+                <?php
+                if (isset($response)) {
+                    ?>
+                    <span style="font-size: 25px; color: green;"><?php echo "It's a " . $response; ?></span>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
